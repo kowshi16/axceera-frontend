@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { FaFacebookF, FaLinkedinIn, FaGoogle, FaRegEnvelope } from "react-icons/fa";
+import { FaRegEnvelope, FaRegUser, FaRegUserCircle } from "react-icons/fa";
 import { MdOutlineLock } from "react-icons/md";
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -12,6 +12,7 @@ import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 interface SignInFormValues {
   email: string;
@@ -128,14 +129,14 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen py-2 bg-gray-100">
+    <div className="flex flex-col items-center justify-center h-screen py-2 bg-gray-100 bg-[url('/images/full-bg-2.jpg')] bg-cover bg-center">
       <main className="flex flex-col items-center justify-center w-full flex-1 text-center">
         <div className="bg-white rounded-2xl shadow-2xl flex flex-col lg:flex-row w-4/5 lg:w-2/3 max-w-4xl">
           {/* Left Section */}
           <div className="w-full lg:w-3/5 p-5 overflow-y-auto max-h-screen">
             <div className="py-5">
-              <h2 className="text-3xl font-bold text-green-500 mb-2">{isSignUp ? "Create an Account" : "Sign in to Account"}</h2>
-              <div className="border-2 w-10 border-green-500 inline-block mb-2"></div>
+              <h2 className="text-3xl font-bold text-blue-800 mb-2">{isSignUp ? "Create an Account" : "Sign in to Account"}</h2>
+              <div className="border-2 w-10 border-blue-800 inline-block mb-2"></div>
 
               {alert && (
                 <div className={`p-4 my-2 text-sm rounded-md ${alert.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
@@ -170,9 +171,9 @@ export default function Home() {
                 >
                   {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
                     <form onSubmit={handleSubmit}>
-                      {/* First Name Field */}
-                      <div className="flex flex-col items-center">
-                        <div className="bg-gray-100 w-full sm:w-64 m-2 flex flex-col mb-3">
+                      {/* First Name and Last Name Fields in One Row */}
+                      <div className="flex flex-col sm:flex-row sm:justify-between mb-3">
+                        <div className="bg-gray-100 w-full sm:w-1/2 m-2 flex flex-col">
                           <TextField
                             id="firstName"
                             name="firstName"
@@ -184,6 +185,13 @@ export default function Home() {
                             value={values.firstName}
                             onChange={handleChange}
                             onBlur={handleBlur}
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <FaRegUser className="text-gray-400" />
+                                </InputAdornment>
+                              ),
+                            }}
                             sx={{
                               "& .MuiOutlinedInput-root": {
                                 "& fieldset": { border: "none" },
@@ -195,11 +203,7 @@ export default function Home() {
                             {msg => <div className="text-red-500 text-xs mt-1 bg-white">{msg}</div>}
                           </ErrorMessage>
                         </div>
-                      </div>
-
-                      {/* Last Name Field */}
-                      <div className="flex flex-col items-center">
-                        <div className="bg-gray-100 w-full sm:w-64 m-2 flex flex-col mb-3">
+                        <div className="bg-gray-100 w-full sm:w-1/2 m-2 flex flex-col">
                           <TextField
                             id="lastName"
                             name="lastName"
@@ -211,6 +215,13 @@ export default function Home() {
                             value={values.lastName}
                             onChange={handleChange}
                             onBlur={handleBlur}
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <FaRegUser className="text-gray-400" />
+                                </InputAdornment>
+                              ),
+                            }}
                             sx={{
                               "& .MuiOutlinedInput-root": {
                                 "& fieldset": { border: "none" },
@@ -225,8 +236,8 @@ export default function Home() {
                       </div>
 
                       {/* Username Field */}
-                      <div className="flex flex-col items-center">
-                        <div className="bg-gray-100 w-full sm:w-64 m-2 flex flex-col mb-3">
+                      <div className="flex flex-col sm:flex-row sm:justify-between mb-3">
+                        <div className="bg-gray-100 w-full sm:w-full m-2 flex flex-col">
                           <TextField
                             id="username"
                             name="username"
@@ -238,6 +249,13 @@ export default function Home() {
                             value={values.username}
                             onChange={handleChange}
                             onBlur={handleBlur}
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <FaRegUserCircle className="text-gray-400" />
+                                </InputAdornment>
+                              ),
+                            }}
                             sx={{
                               "& .MuiOutlinedInput-root": {
                                 "& fieldset": { border: "none" },
@@ -252,8 +270,8 @@ export default function Home() {
                       </div>
 
                       {/* Bio Field */}
-                      <div className="flex flex-col items-center">
-                        <div className="bg-gray-100 w-full sm:w-64 m-2 flex flex-col mb-3">
+                      <div className="flex flex-col sm:flex-row sm:justify-between mb-3">
+                        <div className="bg-gray-100 w-full sm:w-full m-2 flex flex-col">
                           <TextField
                             id="bio"
                             name="bio"
@@ -278,9 +296,9 @@ export default function Home() {
                         </div>
                       </div>
 
-                      {/* Email Field */}
-                      <div className="flex flex-col items-center">
-                        <div className="bg-gray-100 w-full sm:w-64 m-2 flex flex-col mb-3">
+                      {/* Email and Password Fields in One Row */}
+                      <div className="flex flex-col sm:flex-row sm:justify-between mb-3">
+                        <div className="bg-gray-100 w-full sm:w-1/2 m-2 flex flex-col">
                           <TextField
                             id="email"
                             name="email"
@@ -292,6 +310,13 @@ export default function Home() {
                             value={values.email}
                             onChange={handleChange}
                             onBlur={handleBlur}
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <FaRegEnvelope className="text-gray-400" />
+                                </InputAdornment>
+                              ),
+                            }}
                             sx={{
                               "& .MuiOutlinedInput-root": {
                                 "& fieldset": { border: "none" },
@@ -303,11 +328,7 @@ export default function Home() {
                             {msg => <div className="text-red-500 text-xs mt-1 bg-white">{msg}</div>}
                           </ErrorMessage>
                         </div>
-                      </div>
-
-                      {/* Password Field */}
-                      <div className="flex flex-col items-center">
-                        <div className="bg-gray-100 w-full sm:w-64 m-2 flex flex-col mb-3">
+                        <div className="bg-gray-100 w-full sm:w-1/2 m-2 flex flex-col">
                           <Field
                             as={TextField}
                             name="password"
@@ -354,7 +375,7 @@ export default function Home() {
                       <div className="flex flex-col items-center w-full">
                         <button
                           type="submit"
-                          className="border-2 border-green-500 text-green-500 rounded-full px-12 py-2 inline-block font-semibold hover:bg-green-500 hover:text-white mt-5"
+                          className="border-2 border-blue-800 text-blue-800 rounded-full px-12 py-2 inline-block font-semibold hover:bg-blue-800 hover:text-white mt-5"
                           disabled={isSubmitting}
                         >
                           Sign Up
@@ -470,7 +491,7 @@ export default function Home() {
                         {/* Submit Button */}
                         <button
                           type="submit"
-                          className="border-2 border-green-500 text-green-500 rounded-full px-12 py-2 inline-block font-semibold hover:bg-green-500 hover:text-white mt-5"
+                          className="border-2 border-blue-800 text-blue-800 rounded-full px-12 py-2 inline-block font-semibold hover:bg-blue-800 hover:text-white mt-5"
                           disabled={isSubmitting}
                         >
                           Sign In
@@ -484,19 +505,23 @@ export default function Home() {
 
               {/* Toggle between Sign In and Sign Up */}
               <div className="mt-4">
-                <button onClick={toggleForm} className="text-sm text-blue-500 underline">
+                <button onClick={toggleForm} className="text-sm text-blue-800 underline">
                   {isSignUp ? "Already have an account? Sign In" : "Don't have an account? Sign Up"}
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Right Section - hidden on small screens */}
-          <div className="hidden lg:block w-full lg:w-2/5 bg-green-500 text-white rounded-tr-2xl rounded-br-2xl py-10 lg:py-36 px-8 lg:px-12">
-            <h2 className="text-3xl font-bold mb-2">Welcome!</h2>
-            <div className="border-2 w-10 border-white inline-block mb-2"></div>
-            <p className="mb-10">Fill up personal information and start your journey with us.</p>
+          <div className="hidden lg:block w-full lg:w-2/5  text-white rounded-tr-2xl rounded-br-2xl py-10 lg:py-36 px-8 lg:px-12 relative">
+            <Image
+              src="/images/bg-1.jpg"
+              alt="Welcome Image"
+              layout="fill"
+              objectFit="cover"
+              className="rounded-lg"
+            />
           </div>
+
         </div>
       </main>
     </div>
