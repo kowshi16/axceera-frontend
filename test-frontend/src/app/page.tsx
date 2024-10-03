@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { FaRegEnvelope, FaRegUser, FaRegUserCircle } from "react-icons/fa";
+import { FaRegEnvelope, FaRegUser, FaRegUserCircle, FaUserEdit } from "react-icons/fa";
 import { MdOutlineLock } from "react-icons/md";
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -283,6 +283,13 @@ export default function Home() {
                             value={values.bio}
                             onChange={handleChange}
                             onBlur={handleBlur}
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <FaUserEdit className="text-gray-400" />
+                                </InputAdornment>
+                              ),
+                            }}
                             sx={{
                               "& .MuiOutlinedInput-root": {
                                 "& fieldset": { border: "none" },
