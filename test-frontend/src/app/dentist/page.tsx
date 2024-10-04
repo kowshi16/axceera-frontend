@@ -19,6 +19,7 @@ import {
   CircularProgress,
   Button
 } from '@mui/material';
+import { useRouter } from 'next/navigation';
 
 interface Dentist {
   id: number;
@@ -40,6 +41,7 @@ const Dentist = () => {
   const [totalRows, setTotalRows] = useState(0);
   const [loading, setLoading] = useState(true);
   const [searchValue, setSearchValue] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     const fetchDentistData = async () => {
@@ -117,9 +119,20 @@ const Dentist = () => {
     searchDentistData();
   };
 
+  const handleLogout = () => {
+    sessionStorage.clear();
+    router.push('/auth/login');
+  };
+
   return (
     <div className="flex flex-col items-center justify-center bg-gray-100 h-screen">
-      <Typography variant="h4" gutterBottom sx={{ color: 'black', margin: '20px 0' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%', padding: '20px' }}>
+        <Button variant="contained" color="secondary" onClick={handleLogout}>
+          Logout
+        </Button>
+      </Box>
+
+      <Typography variant="h4" gutterBottom sx={{ color: 'black', marginTop: '20px' }}>
         Dentist Information
       </Typography>
 

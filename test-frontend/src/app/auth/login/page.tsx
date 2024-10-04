@@ -12,6 +12,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface SignInFormValues {
     email: string;
@@ -21,6 +23,7 @@ interface SignInFormValues {
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
     const [alert, setAlert] = useState<{ message: string; type: 'success' | 'error' | null } | null>(null);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -35,6 +38,7 @@ const Login = () => {
     });
 
     const handleSignIn = async (values: SignInFormValues) => {
+        setLoading(true);
         try {
             const response = await fetch('http://localhost:8080/auth/login', {
                 method: 'POST',
@@ -73,6 +77,7 @@ const Login = () => {
             console.error('Error:', error);
             setAlert({ message: 'An error occurred. Please try again.', type: 'error' });
         } finally {
+            setLoading(false);
             setTimeout(() => {
                 setAlert(null);
             }, 5000);
@@ -85,6 +90,9 @@ const Login = () => {
 
     return (
         <div className="flex flex-col items-center justify-center h-screen py-2 bg-gray-100 bg-[url('/images/full-bg-2.jpg')] bg-cover bg-center">
+            <Backdrop open={loading} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <main className="flex flex-col items-center justify-center w-full flex-1 text-center">
                 <div className="bg-white rounded-2xl shadow-2xl flex flex-col lg:flex-row w-4/5 lg:w-2/3 max-w-4xl">
                     {/* Left Section */}
